@@ -14,14 +14,16 @@ g++ -Wall shapes.o main.o -o main_2.out
 #include "shapes.h"
 
 using namespace std;
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    // The stack is usually restricted to a limited amount of memory per program/process, 
-    // so allocating very large objects in local scope with atomatic storage is a bad idea, 
+    // The stack is usually restricted to a limited amount of memory per process,
+    // so allocating very large objects in local scope with atomatic storage is a bad idea,
     // that could lead to stack overflow when the program runs out of stack memory.
-    // This is why if the object to be allocated is large, it is better to allocate it on the heap memory, 
-    // to do so, use shared_ptr or unique_ptr
-    vector<shared_ptr<Shape> > shapes;
+    // This is why if the object to be allocated is large, it is better to allocate it on the heap memory,
+    // to do so, use shared_ptr
+    vector<shared_ptr<Shape>> shapes;
+    // or unique_ptr
+    // vector<unique_ptr<Shape>> shapes;
     shapes.push_back(make_shared<Circle>(2.0));
     shapes.push_back(make_shared<Rectangle>(3.1, 1.));
 
@@ -32,8 +34,7 @@ int main(int argc, char** argv)
     // In general, you will have few quadrature rule implemented in a program and can be implemented with the help of the isomorphism.
     // In general, always have a look at the performances. Data locality when accessing elements is important because CPU likes to access elements in that way.
 
-
-    for (const auto& s : shapes)
+    for (const auto &s : shapes)
     {
         cout << s->getArea() << " " << s->getName() << endl;
     }

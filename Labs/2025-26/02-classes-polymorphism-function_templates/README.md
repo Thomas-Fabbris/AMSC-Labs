@@ -11,7 +11,7 @@ C++ has three different pools of memory.
 Static memory persists throughout the entire life of the program, and is usually used to store things like global variables, or variables created with the `static` clause. Their address is fixed and cannot be changed.
 
 ## Stack memory
-The stack is used to store variables used on the inside of a function (including the `main()`` function). It’s a LIFO, “Last-In,-First-Out”, structure. Every time a function declares a new variable it is “pushed” onto the stack. Then when a function finishes running, all the variables associated with that function on the stack are deleted, and the memory they use is freed up. This leads to the “local” scope of function variables. The stack is a special region of memory, and automatically managed by the CPU – so you don’t have to allocate or deallocate memory. Stack memory is divided into successive frames where each time a function is called, it allocates itself a fresh stack frame.
+The stack is used to store variables used on the inside of a function (including the `main()` function). It’s a LIFO, “Last-In,-First-Out”, structure. Every time a function declares a new variable it is “pushed” onto the stack. Then when a function finishes running, all the variables associated with that function on the stack are deleted, and the memory they use is freed up. This leads to the “local” scope of function variables. The stack is a special region of memory, and automatically managed by the CPU – so you don’t have to allocate or deallocate memory. Stack memory is divided into successive frames where each time a function is called, it allocates itself a fresh stack frame.
 
 ![Stack](images/stack.png)
 
@@ -36,16 +36,16 @@ The variable `count` is static storage, because of its keyword `static`. Its fun
 See [shapes](02-shapes/inheritance-full/) full example for the solution
 
 ## Assignments
-1. Implement an abstract class `Shape`, that has a name and a pure virtual function `getArea` to compute its area
-2. Implement the concrete children `Circle` and `Rectangle` that receive as constructor parameters the values needed to compute the area (e.g. radius, basis, height...) and override the pure virtual `getArea`.
-3. Instantiate a vector of `Shape`s using `shared_ptr` and print the area of each shape
+1. Implement an abstract class `Shape`, that has a name and a pure virtual function `getArea()` to compute its area
+2. Implement the concrete children `Circle` and `Rectangle` that receive as constructor parameters the values needed to compute the area (e.g. radius, basis, height...) and override the pure virtual `getArea()`.
+3. Instantiate a vector of `Shape` using `shared_ptr` and print the area of each shape
 
 ## Comments
 The huge advantage of this design pattern is that we can iterate seamlessly through the vector, without knowing which is the actual shape. Indeed, thanks to polymorphism, each shape behaves exactly as it should by resolving the correct method to call at run-time. 
 
 However, this comes with two drawbacks:
 1. The run-time cost of resolving the [virtual table](https://en.wikipedia.org/wiki/Virtual_method_table). That is, the cost of checking which kind of `Shape` an element of the vector is and, by using a table (map), finding the pointer to the correct method.
-2. Low spatial [locality](https://en.wikipedia.org/wiki/Locality_of_reference) of memory. That is, each element of the vector is allocated independetly from the others on the heap, this means that elements that are close in the vector may be have large difference in memory addresses (they are physically distant in the RAM). This hurt performances because CPUs like to access memory that is physically in sequence.
+2. Low spatial [locality](https://en.wikipedia.org/wiki/Locality_of_reference) of memory. That is, each element of the vector is allocated independetly from the others on the heap, this means that elements that are close in the vector may have large difference in memory addresses (they are physically distant in the RAM). This hurts performances because CPUs like to access memory that is physically in sequence.
 
 ## 2b - Comparison with function templates and concepts
 We can implement polymorphism in more ways, each offering different capabilities and trade-offs across different programming scenarios.
@@ -119,13 +119,13 @@ Apply it to the function $f(x) = x^2 - 2$. Pass it as:
 - a lambda
 
 ## Note on Makefile
-In the newton example you can find also a [Makefile](03-newton/solution/src/Makefile), which:
+In the `03-newton` example you can find also a [Makefile](03-newton/solution/src/Makefile), which:
 
 - Automatically finds and compiles all C++ source files
 - Supports C++20 standard
 - Includes headers from a parent directory
 - Provides simple cleanup mechanisms
-- Uses implicit rules for compiling .cpp to .o files
+- Uses implicit rules for compiling `.cpp` to `.o` files
 
 Its explanation follows
 

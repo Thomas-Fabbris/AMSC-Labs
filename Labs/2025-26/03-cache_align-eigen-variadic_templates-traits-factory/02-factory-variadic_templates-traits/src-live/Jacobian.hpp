@@ -25,39 +25,32 @@ public:
   virtual ~JacobianBase() = default;
 };
 
-
-class FullJacobian final: public JacobianBase
+class FullJacobian final : public JacobianBase
 {
-	private:
-		T::JacobianFunctionType jac;
+private:
+  T::JacobianFunctionType jac;
 
-	public:
-		FullJacobian (const T::JacobianFunctionType & _jac) : jac (_jac) {};
+public:
+  FullJacobian(const T::JacobianFunctionType &_jac) : jac(_jac) {};
 
-	 /// Solve J(x) * delta_x = res.
-   virtual T::VariableType
-   solve(const T::VariableType &x, const T::VariableType &res) const override;
-
+  /// Solve J(x) * delta_x = res.
+  virtual T::VariableType
+  solve(const T::VariableType &x, const T::VariableType &res) const override;
 };
 
-
-class DiscreteJacobian final: public JacobianBase
+class DiscreteJacobian final : public JacobianBase
 {
-  private:
-    T::NonLinearSystemType system;
-    const double h;
+private:
+  T::NonLinearSystemType system;
+  const double h;
 
-  public:
-    DiscreteJacobian (const T::JacobianFunctionType & _system, const double & _h)
-     : system (_system), h(_h) {};
+public:
+  DiscreteJacobian(const T::JacobianFunctionType &_system, const double &_h)
+      : system(_system), h(_h) {};
 
-   /// Solve J(x) * delta_x = res.
-   virtual T::VariableType
-   solve(const T::VariableType &x, const T::VariableType &res) const override;
-
+  /// Solve J(x) * delta_x = res.
+  virtual T::VariableType
+  solve(const T::VariableType &x, const T::VariableType &res) const override;
 };
-
-
-
 
 #endif /* JACOBIAN_HPP */

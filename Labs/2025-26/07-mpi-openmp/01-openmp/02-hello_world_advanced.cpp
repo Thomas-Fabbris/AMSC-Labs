@@ -1,10 +1,10 @@
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 #include <iostream>
 
-int
-main(int argc, char **argv)
-{
+int main(int argc, char** argv) {
   int n_threads;
   int thread_id;
 
@@ -14,7 +14,11 @@ main(int argc, char **argv)
    */
 #pragma omp parallel private(thread_id)
   {
+#ifdef _OPENMP
     thread_id = omp_get_thread_num();
+#else
+    thread_id = 0;
+#endif
 
 /**
  * The following block is "critical", i.e. we only let one thread
@@ -25,9 +29,7 @@ main(int argc, char **argv)
  * block), atomic (protect a variable by changing it in one step).
  */
 #pragma omp critical
-    std::cout << "Hello World from thread " << thread_id << "!"
-              << std::endl;
-
+    std::cout << "Hello World from thread " << thread_id << "!" << std::endl;
 
 // Let's wait until all threads reach the following line.
 #pragma omp barrier
@@ -36,7 +38,11 @@ main(int argc, char **argv)
 #pragma omp master
     // The previous line is equivalent to: if (thread_id == 0).
     {
+#ifdef _OPENMP
       n_threads = omp_get_num_threads();
+#else
+      n_threads = 1;
+#endif
       std::cout << "Number of threads = " << n_threads << std::endl;
     }
   }

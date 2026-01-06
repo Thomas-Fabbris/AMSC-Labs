@@ -1,0 +1,4 @@
+adaptive_quadrature.o: adaptive_quadrature.cpp adaptive_quadrature.hpp
+main_quadrature.o: main_quadrature.cpp
+midpoint.o: midpoint.cpp midpoint.hpp
+trapezoidal.o: trapezoidal.cpp trapezoidal.hpp
